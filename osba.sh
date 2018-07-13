@@ -74,7 +74,7 @@ function install_svcat(){
 # extract and setup environmental variables
 function setup_env_vars(){
 
-    # check if OSBA stability has not been set
+   # check if OSBA stability has not been set
    if [[ ! ${OSBA_STABILITY+x} ]]; then
      # if not set it sets default to experimental
      OSBA_STABILITY="EXPERIMENTAL"
@@ -92,6 +92,11 @@ function setup_env_vars(){
    AZURE_CLIENT_ID="$(echo $SERVICE_PRINCIPAL_JSON | jq -r .appId)"
     # extract client-secret from svc-principal creation output
    AZURE_CLIENT_SECRET="$(echo $SERVICE_PRINCIPAL_JSON | jq -r .password)"
+
+   if [[ ! ${OSBA_HELM_VERSION+x} ]]; then
+     # if not set it sets default helm version used as v0.11.0
+     OSBA_HELM_VERSION="v0.11.0"
+   fi
 }
 
 function remove_osba_installation(){
@@ -217,6 +222,7 @@ helm install azure/open-service-broker-azure \
   --set azure.clientId=$AZURE_CLIENT_ID \
   --set azure.clientSecret=$AZURE_CLIENT_SECRET \
   --set modules.minStability=$OSBA_STABILITY \
+  --version $OSBA_HELM_VERSION \
   --wait
 
 # wait untill the deployment of azure/open-service-broker-azure complete
