@@ -80,10 +80,14 @@ function setup_env_vars(){
      OSBA_STABILITY="EXPERIMENTAL"
    fi
 
+   if [[ ! ${SP_PREFIX+x} ]]; then
+      SP_PREFIX="DFLT"
+   fi
+
     # extract subscription id
    AZURE_SUBSCRIPTION_ID="$(az account show --query id --out tsv)"
     # create service principal and store its JSON output
-   SERVICE_PRINCIPAL_JSON="$(az ad sp create-for-rbac --name osba-sp -o json)"
+   SERVICE_PRINCIPAL_JSON="$(az ad sp create-for-rbac --name $SP_PREFIX-osba-sp -o json)"
     # extract svc principal name from svc-principal creation output
    AZURE_SP_NAME="$(echo $SERVICE_PRINCIPAL_JSON | jq -r .name)"
     # extract tenant-id from svc-principal creation output
@@ -117,7 +121,7 @@ function remove_osba_installation(){
       # delete the service principlan using the
       # predefined name i.d 'osba-sp'
       echo "Removing service principal"
-      az ad sp delete --id http://osba-sp
+      az ad sp delete --id http://${SP_PREFIX}-osba-sp
 }
 
 # parse arguments
