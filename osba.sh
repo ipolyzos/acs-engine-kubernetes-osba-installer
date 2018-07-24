@@ -131,14 +131,24 @@ while (( "$#" )); do
       echo "osba.sh : OSBA Installer for ACS-Engine Kubernetes deployments."
       echo "Usage: ./osba.sh [options]"
       echo "options: "
-      echo "    -r, --remove                    Remove OSBA installation."
-      echo "    -h, --help                      Display this help message."
+      echo "    -o, --osba-version               Set the version of OSBA helm to use."
+      echi "    -s, --service-principal-prefix   Set a prefix for service principal's name. "
+      echo "    -r, --remove                     Remove OSBA installation."
+      echo "    -h, --help                       Display this help message."
       exit 0
       ;;
     -r | --remove)
       echo "- Removing OSBA deployment"
       remove_osba_installation
       exit 0
+      ;;
+    -o|--osba-version)
+      OSBA_HELM_VERSION=$2
+      shift 2
+      ;;
+    -s|--service-principal-prefix)
+      SP_PREFIX=$2
+      shift 2
       ;;
     \? )
       echo "Invalid Option: -$OPTARG" 1>&2

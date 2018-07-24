@@ -26,8 +26,10 @@ Usage of the script is descrited help the page i.e.
 osba.sh : OSBA Installer for ACS-Engine Kubernetes deployments.
 Usage: ./osba.sh [options]
 options:
-    -r, --remove                    Remove OSBA installation.
-    -h, --help                      Display this help message.
+    -o, --osba-version               Set the version of OSBA helm to use.
+    -s, --service-principal-prefix   Set a prefix for service principal's name.
+    -r, --remove                     Remove OSBA installation.
+    -h, --help                       Display this help message.
 ```
 
 ## Contributing
