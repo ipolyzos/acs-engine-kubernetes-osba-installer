@@ -150,7 +150,7 @@ while (( "$#" )); do
       SP_PREFIX=$2
       shift 2
       ;;
-    \? )
+    *)
       echo "Invalid Option: -$OPTARG" 1>&2
       exit 1
       ;;
